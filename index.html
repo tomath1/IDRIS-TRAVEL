@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -14,40 +14,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        :root {
-            --primary-bg: #070d1a;
-            --secondary-bg: #0d1b2e;
-            --card-bg: rgba(255,255,255,0.05);
-            --card-border: rgba(255,255,255,0.10);
-            --gold: #c9a84c;
-            --gold-light: #e8c96d;
-            --gold-glow: rgba(201,168,76,0.25);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255,255,255,0.70);
-            --text-muted: rgba(255,255,255,0.42);
-            --nav-bg: rgba(7,13,26,0.92);
-            --shadow-deep: 0 25px 70px rgba(0,0,0,0.60);
-            --shadow-gold: 0 8px 32px rgba(201,168,76,0.28);
-            --whatsapp: #25D366;
-            --blue: #3b82f6;
-            --transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
-            --radius: 16px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-        }
+    /* الخلفية الأساسية */
+    :root {
 
-        /* Light Mode */
-        body.light-mode {
-            --primary-bg: #f0f4f8;
-            --secondary-bg: #e2e8f2;
-            --card-bg: rgba(255,255,255,0.85);
-            --card-border: rgba(0,0,0,0.08);
-            --text-primary: #0d1b2e;
-            --text-secondary: rgba(13,27,46,0.72);
-            --text-muted: rgba(13,27,46,0.48);
-            --nav-bg: rgba(240,244,248,0.95);
-            --shadow-deep: 0 25px 70px rgba(0,0,0,0.14);
-        }
+    /* الخلفية */
+    --primary-bg: #d8efff;
+    --secondary-bg: #bfe4ff;
+
+    /* الكروت */
+    --card-bg: rgba(255, 255, 255, 0.78);
+    --card-border: rgba(0, 140, 255, 0.18);
+
+    /* السماوي الأساسي */
+    --gold: #00a6ff;
+    --gold-light: #5ecbff;
+    --gold-glow: rgba(0, 166, 255, 0.20);
+
+    /* النصوص */
+    --text-primary: #0b2a3c;
+    --text-secondary: rgba(11, 42, 60, 0.72);
+    --text-muted: rgba(11, 42, 60, 0.45);
+
+    /* الناف بار */
+    --nav-bg: rgba(216, 239, 255, 0.88);
+
+    /* الظلال */
+    --shadow-deep: 0 20px 50px rgba(0, 70, 120, 0.10);
+    --shadow-gold: 0 10px 30px rgba(0, 166, 255, 0.28);
+}
+.bg-mesh::before {
+    background: radial-gradient(circle at top right, rgba(31, 143, 255, 0.18) 0%, transparent 60%);
+}
 
         * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -74,20 +71,20 @@
         .bg-mesh {
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
         }
-        .bg-mesh::before {
-            content: ''; position: absolute;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(26,58,92,0.4) 0%, transparent 70%);
-            top: -150px; right: -150px; border-radius: 50%;
-            animation: meshFloat 12s ease-in-out infinite;
-        }
-        .bg-mesh::after {
-            content: ''; position: absolute;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
-            bottom: -100px; left: -100px; border-radius: 50%;
-            animation: meshFloat 15s ease-in-out infinite reverse;
-        }
+      .bg-mesh::before {
+    background: radial-gradient(circle, rgba(30,144,255,0.25) 0%, transparent 70%);
+}
+
+.bg-mesh::after {
+    background: radial-gradient(circle, rgba(99,179,255,0.15) 0%, transparent 70%);
+}
+       .bg-mesh::before {
+    background: radial-gradient(circle, rgba(30,144,255,0.25) 0%, transparent 70%);
+}
+
+.bg-mesh::after {
+    background: radial-gradient(circle, rgba(99,179,255,0.15) 0%, transparent 70%);
+}
         @keyframes meshFloat { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,30px)} }
 
         /* Loading */
@@ -357,11 +354,6 @@
     color:#E1306C;
 }
 
-.facebook-btn:hover,
-.instagram-btn:hover{
-    transform:translateY(-3px);
-}
-
         /* FAB - FIXED SIZE FOR MOBILE */
         .fab-group {
             position: fixed; bottom: 24px; left: 16px; z-index: 800;
@@ -544,12 +536,11 @@
     </style>
 </head>
 
-<body class="lang-ar">
+<body class="lang-en">
 
 <!-- Loading -->
 <div id="loading">
     <div class="load-ring"><i class="fas fa-plane load-icon"></i></div>
-    <div class="load-name ar-text">سفريات إدريس</div>
     <div class="load-name en-text">Idris Travel</div>
     <div class="load-bar-wrap"><div class="load-bar"></div></div>
 </div>
@@ -569,20 +560,12 @@
 </div>
 
         <div>
-            <div class="brand-name-ar ar-text">سفريات إدريس</div>
             <div class="brand-name-ar en-text">Idris Travel</div>
-            <div class="brand-name-en ar-text">IDRIS TRAVEL</div>
-            <div class="brand-name-en en-text">سفريات إدريس</div>
         </div>
     </div>
     <div class="top-bar-controls">
-        <button class="ctrl-btn" onclick="toggleTheme()" id="themeBtn" title="Theme">
-            <i class="fas fa-moon" id="themeIcon"></i>
+        
         </button>
-        <div class="lang-pill">
-            <button id="btnAr" class="active" onclick="setLang('ar')">ع</button>
-            <button id="btnEn" onclick="setLang('en')">EN</button>
-        </div>
     </div>
 </div>
 
@@ -593,42 +576,42 @@
     <div class="hero-card">
         <div class="nfc-tag">
             <div class="nfc-dot"></div>
-            <span class="ar-text">IDRIS TRAVEL</span>
+           
             <span class="en-text">IDRIS TRAVEL</span>
         </div>
         <div class="avatar-wrap">
             
 
 <div class="avatar">
-    <img src="profile.jpg" alt="Profile" id="profileImage">
+    <img src="prof.png" alt="Profile" id="profileImage">
 </div>
 
 
             <div class="avatar-badge"></div>
         </div>
-        <div class="profile-name ar-text">عزت سامي </div>
+        
         <div class="profile-name en-text">Ezzat Samy</div>
         <div class="profile-role-badge">
             <i class="fas fa-briefcase"></i>
-            <span class="ar-text">مدير الحسابات والمبيعات</span>
+            
             <span class="en-text">Accounts & Sales Manager</span>
         </div>
         <div class="profile-company">
             <i class="fas fa-building"></i>
-            <span class="ar-text">سفريات إدريس كويت</span>
-            <span class="en-text">Idris Travel KW.</span>
+            
+            <span class="en-text">Idris Travel From 1966 </span>
         </div>
 
         <div class="quick-stats">
-            <div class="qs-item"><span class="qs-num" data-target="15">0</span><div class="qs-label ar-text">سنة</div><div class="qs-label en-text">Yrs</div></div>
-            <div class="qs-item"><span class="qs-num" data-target="500" data-suffix="+">0</span><div class="qs-label ar-text">عميل</div><div class="qs-label en-text">Clients</div></div>
-            <div class="qs-item"><span class="qs-num" data-target="30" data-suffix="+">0</span><div class="qs-label ar-text">وجهة</div><div class="qs-label en-text">Dest.</div></div>
+            <div class="qs-item"><span class="qs-num" data-target="60">0</span><div class="qs-label en-text">Yrs</div></div>
+            <div class="qs-item"><span class="qs-num" data-target="500" data-suffix="+">0</span><div class="qs-label en-text">Clients</div></div>
+            <div class="qs-item"><span class="qs-num" data-target="30" data-suffix="+">0</span><div class="qs-label en-text">Dest.</div></div>
         </div>
 
         <div class="cta-row">
             <button class="btn-cta gold" onclick="saveVCard()">
                 <i class="fas fa-address-card"></i>
-                <span class="ar-text">حفظ البطاقة</span>
+        
                 <span class="en-text">Save Contact</span>
             </button>
            
@@ -636,12 +619,12 @@
             <a href="https://wa.me/+96599174079" target="_blank" class="btn-cta wa">
                 <img src="whatsapp.png" class="wa-logo">
 
-                <span class="ar-text">واتساب</span>
+               
                 <span class="en-text">WhatsApp</span>
             </a>
             <a href="tel:+96599174079" class="btn-cta outline">
                 <i class="fas fa-phone"></i>
-                <span class="ar-text">اتصال</span>
+               
                 <span class="en-text">Call</span>
             </a>
         </div>
@@ -649,24 +632,25 @@
 
     <!-- Quick Actions -->
     <div class="info-card">
-        <div class="card-title"><i class="fas fa-bolt"></i><span class="ar-text">إجراءات سريعة</span><span class="en-text">Quick Actions</span></div>
+        <div class="card-title"><i class="fas fa-bolt"></i><span class="en-text">Quick Actions</span></div>
         <div class="action-grid">
-            <a href="tel:+96599174079" class="action-item"><div class="ai-icon"><i class="fas fa-phone"></i></div><span class="ar-text">اتصال</span><span class="en-text">Call</span></a>
+            <a href="tel:+96599174079" class="action-item"><div class="ai-icon"><i class="fas fa-phone"></i></div><span class="en-text">Call</span></a>
             <a href="https://wa.me/+96599174079" target="_blank" class="action-item">
 
     <div class="ai-icon whatsapp-icon">
-        <img src="whatsapp.png" class="action-wa-logo"></div><span class="ar-text">واتساب</span><span class="en-text">WhatsApp</span></a>
-            <a href="mailto:idristrading@gmail.com" class="action-item"><div class="ai-icon"><i class="fas fa-envelope"></i></div><span class="ar-text">بريد</span><span class="en-text">Email</span></a>
-            <button class="action-item" onclick="saveVCard()"><div class="ai-icon"><i class="fas fa-user-plus"></i></div><span class="ar-text">حفظ</span><span class="en-text">Save</span></button>
+        <img src="whatsapp.png" class="action-wa-logo"></div><span class="en-text">WhatsApp</span></a>
+            <a href="mailto:idristrading@gmail.com" class="action-item"><div class="ai-icon"><i class="fas fa-envelope"></i></div><span class="en-text">Email</span></a>
+            <button class="action-item" onclick="saveVCard()"><div class="ai-icon"><i class="fas fa-user-plus"></i><span class="en-text">Save</span></button>
         </div>
     </div>
 
     <!-- Contact Info -->
     <div class="info-card">
-        <div class="card-title"><i class="fas fa-address-book"></i><span class="ar-text">بيانات التواصل</span><span class="en-text">Contact</span></div>
+        <div class="card-title"><i class="fas fa-address-book"></i>
+            <span class="en-text">Contact</span></div>
         <div class="info-row">
             <div class="info-icon"><i class="fas fa-phone"></i></div>
-            <div class="info-content"><div class="info-label ar-text">الهاتف</div><div class="info-label en-text">Phone</div><div class="info-value"><a href="tel:0096522424832">0096522424832</a></div></div>
+            <div class="info-content"><div class="info-label en-text">Phone</div><div class="info-value"><center><a href="tel:0096522424832">Phone</a></center></div></div>
             <button class="copy-btn" onclick="copy('0096522424832')"><i class="far fa-copy"></i></button>
         </div>
         <div class="info-row">
@@ -678,11 +662,11 @@
         <div class="info-label">WhatsApp</div>
 
         <div class="info-value">
-            <a href="https://wa.me/0096522424832" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;">
-
+        <a href="https://wa.me/0096522424832"
+            target="_blank"
+             style="display:flex;justify-content:center;align-items:center;text-decoration:none;color:inherit;">
                 <span>Chat</span>
-
-            </a>
+        </a>
         </div>
     </div>
 
@@ -692,55 +676,50 @@
 </div>
         <div class="info-row">
             <div class="info-icon"><i class="fas fa-envelope"></i></div>
-            <div class="info-content"><div class="info-label ar-text">البريد</div><div class="info-label en-text">Email</div><div class="info-value"><a href="mailto:idristrading@gmail.com">Emile</a></div></div>
+            <div class="info-content"><div class="info-label en-text">Email</div><div class="info-value"><center><a href="mailto:idristrading@gmail.com">Email</a></center></div></div>
             <button class="copy-btn" onclick="copy('idristrading@gmail.com')"><i class="far fa-copy"></i></button>
         </div>
         <div class="info-row">
             <div class="info-icon" style="background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.25);color:#ef4444;"><i class="fas fa-map-marker-alt"></i></div>
-            <div class="info-content"><div class="info-label ar-text">العنوان</div><div class="info-label en-text">Address</div><div class="info-value ar-text"><a href="https://www.google.com/maps?q=29.3625927,47.9659331&z=17&hl=en" target="_blank">مكتب رقم ٣٥ بجوار بيت اولادنا.</a></div><div class="info-value en-text"><a href="https://www.google.com/maps?q=29.3625927,47.9659331&z=17&hl=en" target="_blank">Office 35 next to Bait Awladona</a></div></div>
+            <div class="info-content"><div class="info-label en-text">Address</div><div class="info-value en-text"><center><a href="https://www.google.com/maps?q=29.3625927,47.9659331&z=17&hl=en" target="_blank">Office 35 next to Bait Awladona</a></center></div></div>
             <a href="https://www.google.com/maps?q=29.3625927,47.9659331&z=17&hl=en" target="_blank" class="copy-btn"><i class="fas fa-external-link-alt"></i></a>
         </div>
     </div>
 
     <!-- Specialties -->
     <div class="info-card">
-        <div class="card-title"><i class="fas fa-star"></i><span class="ar-text">التخصصات</span><span class="en-text">Specialties</span></div>
+        <div class="card-title"><i class="fas fa-star"></i><span class="en-text">Specialties</span></div>
         <div class="spec-grid">
-            <div class="spec-item"><div class="spec-icon"><i class="fas fa-plane"></i></div><div class="spec-text ar-text">حجوزات الطيران</div><div class="spec-text en-text">Flight Booking</div></div>
-            <div class="spec-item"><div class="spec-icon"><i class="fas fa-hotel"></i></div><div class="spec-text ar-text">الفنادق</div><div class="spec-text en-text">Hotels</div></div>
-            <div class="spec-item"><div class="spec-icon"><i class="fas fa-passport"></i></div><div class="spec-text ar-text">التأشيرات</div><div class="spec-text en-text">Visas</div></div>
-            <div class="spec-item"><div class="spec-icon"><i class="fas fa-kaaba"></i></div><div class="spec-text ar-text">العمرة والحج</div><div class="spec-text en-text">Umrah & Hajj</div></div>
-            <div class="spec-item"><div class="spec-icon"><i class="fas fa-chart-line"></i></div><div class="spec-text ar-text">الحسابات</div><div class="spec-text en-text">Accounts</div></div>
-            <div class="spec-item"><div class="spec-icon"><i class="fas fa-handshake"></i></div><div class="spec-text ar-text">عروض الشركات</div><div class="spec-text en-text">Corporate</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-plane"></i></div><div class="spec-text en-text">Flight Booking</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-hotel"></i></div><div class="spec-text en-text">Hotels</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-passport"></i></div><div class="spec-text en-text">Visas</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-kaaba"></i></div><div class="spec-text en-text">Hajj and Ummrah</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-chart-line"></i></div><div class="spec-text en-text">Accounts</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-handshake"></i></div><div class="spec-text en-text">Corporate</div></div>
         </div>
     </div>
 
     <!-- Social -->
-    <div class="info-card">
+   <!-- Social -->
+<div class="info-card">
     <div class="card-title">
         <i class="fas fa-share-alt"></i>
-        <span class="ar-text">تواصل اجتماعي</span>
         <span class="en-text">Social</span>
     </div>
+
+    <div class="social-row">
 
         <!-- Instagram -->
         <a href="https://www.instagram.com/good_travel_offers/"
            target="_blank"
-           class="soc-btn instagram-btn">
+           class="soc-btn instagram-btn"
+           style="justify-content:center;">
 
             <i class="fab fa-instagram"></i>
             <span>Instagram</span>
         </a>
 
     </div>
-</div>
-
-    <div class="footer-note">
-        <i class="fas fa-wifi"></i>
-        <span class="ar-text"> NFC © 2026</span>
-        <span class="en-text"> NFC © 2026</span>
-    </div>
-
 </div>
 
 <!-- FAB -->
@@ -750,6 +729,9 @@
     <button class="fab fab-main" onclick="toggleFab()">
         <i class="fas fa-plus" id="fabIcon"></i>
     </button>
+
+    <!-- Hidden buttons -->
+    <div class="fab-group">
 
     <!-- Hidden buttons -->
     <a href="https://wa.me/96599174079" target="_blank" class="fab fab-wa fab-item">
@@ -764,31 +746,18 @@
         <i class="fas fa-user-plus"></i>
     </button>
 
-</div>
+    <!-- Main + Button -->
+    <button class="fab fab-main" onclick="toggleFab()">
+        <i class="fas fa-plus" id="fabIcon"></i>
+    </button>
 
+</div>
 <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
 
 <script>
 /* Loading */
 window.addEventListener('load', () => setTimeout(() => document.getElementById('loading').classList.add('hide'), 1800));
 
-/* Theme */
-function toggleTheme() {
-    document.body.classList.toggle('light-mode');
-    const icon = document.getElementById('themeIcon');
-    icon.className = document.body.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
-    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-}
-(function(){ const t = localStorage.getItem('theme'); if(t === 'light') { document.body.classList.add('light-mode'); document.getElementById('themeIcon').className = 'fas fa-sun'; } })();
-
-/* Language */
-function setLang(l) {
-    document.body.className = 'lang-' + l;
-    document.getElementById('btnAr').classList.toggle('active', l === 'ar');
-    document.getElementById('btnEn').classList.toggle('active', l === 'en');
-    localStorage.setItem('lang', l);
-    showT(l === 'ar' ? '🇪🇬 عربي' : '🌍 English');
-}
 
 /* Copy */
 function copy(t) {
