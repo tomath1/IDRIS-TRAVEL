@@ -662,7 +662,7 @@
         <div class="info-label">WhatsApp</div>
 
         <div class="info-value">
-        <a href="https://wa.me/0096522424832"
+        <a href="https://wa.me/+96599174079"
             target="_blank"
              style="display:flex;justify-content:center;align-items:center;text-decoration:none;color:inherit;">
                 <span>Chat</span>
@@ -774,12 +774,28 @@ function showT(msg) {
 
 /* VCard */
 function saveVCard() {
-    const v = `BEGIN:VCARD\nVERSION:3.0\nFN:محمد إدريس\nN:إدريس;محمد;;;\nTITLE:مدير الحسابات والمبيعات\nORG:سفريات إدريس\nTEL;TYPE=CELL:+201234567890\nEMAIL:mohamed@idristravel.com\nURL:https://idristravel.com\nEND:VCARD`;
-    const b = new Blob([v], {type:'text/vcard'}); const u = URL.createObjectURL(b);
-    const a = document.createElement('a'); a.href = u; a.download = 'Mohamed_Idris.vcf'; a.click();
-    URL.revokeObjectURL(u); showT('✓ تم الحفظ');
-}
+    const v = `BEGIN:VCARD
+VERSION:3.0
+FN:Ezzat Samy Travel
+N:Samy;Ezzat;;;
+TITLE:Accounts & Sales Manager
+ORG:Idris Travel
+TEL;TYPE=CELL:+96599174079
+EMAIL:idristrading@gmail.com
+URL:https://tomath1.github.io/IDRIS-TRAVEL/
+END:VCARD`;
 
+    const b = new Blob([v], {type:'text/vcard'});
+    const u = URL.createObjectURL(b);
+
+    const a = document.createElement('a');
+    a.href = u;
+    a.download = 'Ezzat_Samy_Travel.vcf';
+    a.click();
+
+    URL.revokeObjectURL(u);
+    showT('✓ Saved');
+}
 /* Scroll Top */
 window.addEventListener('scroll', () => {
     document.getElementById('toTop').classList.toggle('show', window.scrollY > 300);
