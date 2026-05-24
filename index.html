@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="سفريات إدريس - بطاقة مدير الحسابات والمبيعات الرقمية">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title> IDRIS TRAVEL </title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-bg: #070d1a;
+            --secondary-bg: #0d1b2e;
+            --card-bg: rgba(255,255,255,0.05);
+            --card-border: rgba(255,255,255,0.10);
+            --gold: #c9a84c;
+            --gold-light: #e8c96d;
+            --gold-glow: rgba(201,168,76,0.25);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255,255,255,0.70);
+            --text-muted: rgba(255,255,255,0.42);
+            --nav-bg: rgba(7,13,26,0.92);
+            --shadow-deep: 0 25px 70px rgba(0,0,0,0.60);
+            --shadow-gold: 0 8px 32px rgba(201,168,76,0.28);
+            --whatsapp: #25D366;
+            --blue: #3b82f6;
+            --transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+            --radius: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            --primary-bg: #f0f4f8;
+            --secondary-bg: #e2e8f2;
+            --card-bg: rgba(255,255,255,0.85);
+            --card-border: rgba(0,0,0,0.08);
+            --text-primary: #0d1b2e;
+            --text-secondary: rgba(13,27,46,0.72);
+            --text-muted: rgba(13,27,46,0.48);
+            --nav-bg: rgba(240,244,248,0.95);
+            --shadow-deep: 0 25px 70px rgba(0,0,0,0.14);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior:smooth; }
+
+        body {
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        body.lang-en { direction: ltr; font-family: 'Poppins', 'Cairo', sans-serif; }
+        body.lang-ar { direction: rtl; font-family: 'Cairo', 'Poppins', sans-serif; }
+
+        body.lang-ar .en-text { display: none !important; }
+        body.lang-en .ar-text { display: none !important; }
+
+        ::selection { background: var(--gold); color: var(--primary-bg); }
+
+        /* Background */
+        .bg-mesh {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        }
+        .bg-mesh::before {
+            content: ''; position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(26,58,92,0.4) 0%, transparent 70%);
+            top: -150px; right: -150px; border-radius: 50%;
+            animation: meshFloat 12s ease-in-out infinite;
+        }
+        .bg-mesh::after {
+            content: ''; position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+            bottom: -100px; left: -100px; border-radius: 50%;
+            animation: meshFloat 15s ease-in-out infinite reverse;
+        }
+        @keyframes meshFloat { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,30px)} }
+
+        /* Loading */
+        #loading {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--primary-bg);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+            transition: opacity 0.7s ease;
+        }
+        #loading.hide { opacity: 0; pointer-events: none; }
+        .load-ring {
+            width: 80px; height: 80px; border-radius: 50%;
+            border: 3px solid var(--card-border); border-top-color: var(--gold);
+            animation: spin 1s linear infinite;
+            display: flex; align-items: center; justify-content: center;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .load-icon { font-size: 1.6rem; color: var(--gold); }
+        .load-name { font-size: 1.2rem; font-weight: 800; color: var(--text-primary); }
+        .load-bar-wrap { width: 160px; height: 3px; background: var(--card-border); border-radius: 3px; overflow: hidden; }
+        .load-bar { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); animation: loadProg 1.8s ease forwards; }
+        @keyframes loadProg { from{width:0} to{width:100%} }
+
+        /* Top Bar */
+        .top-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 16px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+        }
+        .brand-icon {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: var(--primary-bg);
+            flex-shrink: 0;
+        }
+        .brand-name-ar { font-size: 0.88rem; font-weight: 800; color: var(--text-primary); }
+        .brand-name-en { font-size: 0.62rem; color: var(--gold); letter-spacing: 1px; }
+        .top-bar-controls { display: flex; align-items: center; gap: 6px; }
+
+        .ctrl-btn {
+            width: 36px; height: 36px; border-radius: 10px;
+            border: 1px solid var(--card-border); background: var(--card-bg);
+            color: var(--text-secondary); font-size: 0.9rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        .lang-pill { display: flex; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; overflow: hidden; }
+        .lang-pill button { padding: 6px 12px; border: none; background: transparent; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
+        .lang-pill button.active { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--primary-bg); }
+
+        /* Wrapper */
+        .wrapper {
+            position: relative; z-index: 1;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 72px 14px 140px;
+        }
+
+        /* Hero Card */
+        .hero-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: var(--radius-xl); padding: 35px 22px 28px;
+            text-align: center; backdrop-filter: blur(20px);
+            margin-bottom: 14px; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-deep);
+        }
+        .hero-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            animation: shimmer 3s linear infinite;
+            background-size: 200% 100%;
+        }
+        @keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+
+        .avatar-wrap { position: relative; display: inline-block; margin-bottom: 16px; }
+        .avatar {
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px solid var(--gold);
+            background: linear-gradient(135deg, var(--secondary-bg), #1a3a5c);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.8rem; color: var(--gold);
+            box-shadow: 0 0 0 5px var(--gold-glow);
+        }
+        .avatar-badge {
+            position: absolute; bottom: 2px; right: 2px;
+            width: 22px; height: 22px; border-radius: 50%;
+            background: #22c55e; border: 3px solid var(--primary-bg);
+        }
+        .avatar-badge::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:50%;
+}
+
+.brand-icon img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+        .nfc-tag {
+            position: absolute; top: 14px; left: 14px;
+            display: flex; align-items: center; gap: 5px;
+            background: var(--gold-glow); border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 20px; padding: 4px 10px; font-size: 0.68rem;
+            color: var(--gold); font-weight: 600;
+        }
+        body.lang-en .nfc-tag { left: auto; right: 14px; }
+        .nfc-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 1.5s infinite; }
+
+        .profile-name { font-size: 1.4rem; font-weight: 900; color: var(--text-primary); margin-bottom: 6px; }
+        .profile-role-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 20px; padding: 5px 14px; font-size: 0.82rem;
+            color: var(--gold); font-weight: 600; margin-bottom: 10px;
+        }
+        .profile-company { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .profile-company i { color: var(--gold); font-size: 0.75rem; }
+
+        /* Quick Stats */
+        .quick-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 20px; }
+        .qs-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 12px 6px; text-align: center; }
+        .qs-num { font-size: 1.3rem; font-weight: 900; color: var(--gold); display: block; }
+        .qs-label { font-size: 0.65rem; color: var(--text-muted); margin-top: 3px; }
+
+        /* CTA Buttons */
+        .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .btn-cta {
+            display: flex; align-items: center; justify-content: center; gap: 7px;
+            padding: 12px 16px; border-radius: var(--radius);
+            font-family: inherit; font-size: 0.88rem; font-weight: 700;
+            cursor: pointer; border: none; text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-cta.gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--primary-bg); box-shadow: var(--shadow-gold); grid-column: 1 / -1; }
+        .btn-cta.gold:hover { transform: translateY(-2px); }
+        .btn-cta.wa { background: linear-gradient(135deg, #25D366, #128C7E); color: white; }
+        .btn-cta.outline { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-secondary); }
+
+        /* Info Cards */
+        .info-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg); padding: 20px 18px;
+            backdrop-filter: blur(20px); margin-bottom: 12px;
+            box-shadow: var(--shadow-deep);
+        }
+        .card-title {
+            font-size: 0.75rem; font-weight: 700; color: var(--gold);
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+        }
+        .card-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--gold-glow), transparent); }
+
+        .info-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 11px 12px; border-radius: var(--radius);
+            background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+            margin-bottom: 8px; transition: var(--transition);
+        }
+        body.light-mode .info-row { background: rgba(0,0,0,0.03); }
+        .info-row:hover { border-color: var(--gold); }
+ .info-icon{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    background:var(--gold-glow);
+    border:1px solid rgba(201,168,76,0.2);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    color:var(--gold);
+    font-size:0.88rem;
+    flex-shrink:0;
+}
+
+.info-icon img{
+    width:20px;
+    height:20px;
+    object-fit:contain;
+    display:block;
+}
+
+        
+        .info-content { flex: 1; min-width: 0; }
+        .info-label { font-size: 0.65rem; color: var(--text-muted); margin-bottom: 2px; }
+        .info-value { font-size: 0.88rem; color: var(--text-primary); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .info-value a { color: inherit; text-decoration: none; }
+        .copy-btn {
+            width: 34px; height: 34px; border-radius: 9px;
+            border: 1px solid var(--card-border); background: transparent;
+            color: var(--text-muted); cursor: pointer; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* Action Grid */
+        .action-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+        .action-item {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            padding: 14px 6px; border-radius: var(--radius);
+            background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+            text-decoration: none; cursor: pointer; transition: var(--transition);
+            color: var(--text-secondary); font-size: 0.68rem; font-weight: 600; text-align: center;
+        }
+        body.light-mode .action-item { background: rgba(0,0,0,0.03); }
+        .action-item:hover { transform: translateY(-3px); border-color: var(--gold); }
+        .ai-icon {
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+        }
+        .action-item:nth-child(1) .ai-icon { background: rgba(59,130,246,0.15); color: #3b82f6; }
+        .action-item:nth-child(2) .ai-icon { background: rgba(37,211,102,0.15); color: #25D366; }
+        .action-item:nth-child(3) .ai-icon { background: var(--gold-glow); color: var(--gold); }
+        .action-item:nth-child(4) .ai-icon { background: rgba(168,85,247,0.15); color: #a855f7; }
+
+        /* Spec Grid */
+        .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .spec-item {
+            background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+            border-radius: var(--radius); padding: 14px 12px;
+            display: flex; align-items: center; gap: 10px; transition: var(--transition);
+        }
+        body.light-mode .spec-item { background: rgba(0,0,0,0.03); }
+        .spec-item:hover { border-color: var(--gold); }
+        .spec-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--gold-glow); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.9rem; flex-shrink: 0; }
+        .spec-text { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; line-height: 1.3; }
+
+        /* Social Row */
+        .social-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .soc-btn {
+            flex: 1; min-width: 80px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 10px 12px; border-radius: var(--radius);
+            border: 1px solid var(--card-border); background: rgba(255,255,255,0.04);
+            text-decoration: none; color: var(--text-secondary);
+            font-size: 0.78rem; font-weight: 600; transition: var(--transition);
+        }
+        body.light-mode .soc-btn { background: rgba(0,0,0,0.03); }
+        .soc-btn:hover { transform: translateY(-2px); }
+        .facebook-btn{
+    background:rgba(24,119,242,0.12);
+    border-color:rgba(24,119,242,0.25);
+    color:#1877F2;
+}
+
+.instagram-btn{
+    background:rgba(225,48,108,0.12);
+    border-color:rgba(225,48,108,0.25);
+    color:#E1306C;
+}
+
+.facebook-btn:hover,
+.instagram-btn:hover{
+    transform:translateY(-3px);
+}
+
+        /* FAB - FIXED SIZE FOR MOBILE */
+        .fab-group {
+            position: fixed; bottom: 24px; left: 16px; z-index: 800;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        body.lang-en .fab-group { left: auto; right: 16px; }
+
+        .fab {
+            width: 52px; height: 52px; border-radius: 50%;
+            border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; text-decoration: none;
+            transition: var(--transition); position: relative;
+        }
+        .fab-wa { background: linear-gradient(135deg, #25D366, #128C7E); color: white; box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+        .fab-call { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; box-shadow: 0 4px 20px rgba(59,130,246,0.35); }
+        .fab-save { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--primary-bg); box-shadow: var(--shadow-gold); }
+
+        .fab:active { transform: scale(0.92); }
+        .fab::before {
+            content: attr(data-tip); position: absolute; right: 60px;
+            background: var(--secondary-bg); color: var(--text-primary);
+            border: 1px solid var(--card-border); border-radius: 8px;
+            padding: 5px 10px; font-size: 0.75rem; font-weight: 600;
+            white-space: nowrap; opacity: 0; pointer-events: none;
+            transition: var(--transition);
+        }
+        body.lang-en .fab::before { right: auto; left: 60px; }
+        .fab:hover::before { opacity: 1; }
+
+        /* Scroll to Top */
+        #toTop {
+            position: fixed; bottom: 24px; right: 16px; z-index: 800;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            color: var(--text-secondary); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.95rem; opacity: 0; transform: translateY(10px);
+            transition: var(--transition);
+        }
+        body.lang-en #toTop { right: auto; left: 16px; }
+        #toTop.show { opacity: 1; transform: translateY(0); }
+        #toTop:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* Toast */
+        #toast {
+            position: fixed; top: 70px; left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: var(--secondary-bg); border: 1px solid var(--gold);
+            border-radius: 50px; padding: 10px 20px;
+            font-size: 0.82rem; font-weight: 600; color: var(--text-primary);
+            z-index: 9998; display: flex; align-items: center; gap: 8px;
+            opacity: 0; transition: var(--transition);
+            backdrop-filter: blur(20px); white-space: nowrap;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        #toast i { color: var(--gold); }
+
+        /* Footer */
+        .footer-note {
+            text-align: center; padding: 10px 0;
+            color: var(--text-muted); font-size: 0.72rem;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .footer-note i { color: var(--gold); }
+
+        /* ============================================
+           RESPONSIVE - MOBILE OPTIMIZED
+        ============================================ */
+        @media (max-width: 380px) {
+            .wrapper { padding: 68px 10px 130px; }
+            .hero-card { padding: 28px 16px 22px; }
+            .avatar { width: 85px; height: 85px; font-size: 2.4rem; }
+            .profile-name { font-size: 1.25rem; }
+            .profile-role-badge { font-size: 0.75rem; padding: 4px 12px; }
+            .quick-stats { gap: 6px; }
+            .qs-item { padding: 10px 4px; }
+            .qs-num { font-size: 1.15rem; }
+            .cta-row { gap: 6px; }
+            .btn-cta { padding: 10px 12px; font-size: 0.82rem; }
+
+            /* FAB smaller on tiny screens */
+            .fab { width: 48px; height: 48px; font-size: 1.15rem; }
+            #toTop { width: 40px; height: 40px; }
+
+            .info-card { padding: 16px 14px; }
+            .action-grid { grid-template-columns: repeat(4,1fr); gap: 6px; }
+            .action-item { padding: 12px 4px; font-size: 0.62rem; }
+            .ai-icon { width: 36px; height: 36px; font-size: 1rem; }
+            .spec-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (min-width: 381px) and (max-width: 480px) {
+            .wrapper { padding: 72px 14px 140px; }
+            .fab { width: 52px; height: 52px; }
+        }
+
+        /* Tablet / Desktop */
+        @media (min-width: 768px) {
+            .wrapper { max-width: 480px; }
+            .fab { width: 56px; height: 56px; font-size: 1.4rem; }
+        }
+
+        /* Safe area for iPhone notch */
+        @supports (padding-top: env(safe-area-inset-top)) {
+            .top-bar { padding-top: max(10px, env(safe-area-inset-top)); }
+            .wrapper { padding-top: max(72px, calc(72px + env(safe-area-inset-top))); }
+            .fab-group { bottom: max(24px, env(safe-area-inset-bottom)); }
+        }
+        .wa-logo{
+    width:22px;
+    height:22px;
+    object-fit:contain;
+    }
+    .fab-wa-logo{
+    width:28px;
+    height:28px;
+    object-fit:contain;
+    }
+    
+/* شكل أيقونة الواتساب */
+.whatsapp-icon{
+    background: rgba(37,211,102,0.15) !important;
+    color:#25D366 !important;
+}
+
+/* صورة الواتساب */
+.action-wa-logo{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+}
+
+
+        .info-icon img{
+    width:20px;
+    height:20px;
+    object-fit:contain;
+    display:block;
+}
+    </style>
+</head>
+
+<body class="lang-ar">
+
+<!-- Loading -->
+<div id="loading">
+    <div class="load-ring"><i class="fas fa-plane load-icon"></i></div>
+    <div class="load-name ar-text">سفريات إدريس</div>
+    <div class="load-name en-text">Idris Travel</div>
+    <div class="load-bar-wrap"><div class="load-bar"></div></div>
+</div>
+
+<!-- Toast -->
+<div id="toast"><i class="fas fa-check-circle"></i><span id="toast-msg"></span></div>
+
+<!-- BG -->
+<div class="bg-mesh"></div>
+
+<!-- Top Bar -->
+<div class="top-bar">
+    <div style="display:flex;align-items:center;gap:8px;">
+
+        <div class="brand-icon">
+    <img src="logo.png" alt="Logo" id="companyLogo">
+</div>
+
+        <div>
+            <div class="brand-name-ar ar-text">سفريات إدريس</div>
+            <div class="brand-name-ar en-text">Idris Travel</div>
+            <div class="brand-name-en ar-text">IDRIS TRAVEL</div>
+            <div class="brand-name-en en-text">سفريات إدريس</div>
+        </div>
+    </div>
+    <div class="top-bar-controls">
+        <button class="ctrl-btn" onclick="toggleTheme()" id="themeBtn" title="Theme">
+            <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+        <div class="lang-pill">
+            <button id="btnAr" class="active" onclick="setLang('ar')">ع</button>
+            <button id="btnEn" onclick="setLang('en')">EN</button>
+        </div>
+    </div>
+</div>
+
+<!-- Wrapper -->
+<div class="wrapper">
+
+    <!-- Hero Card -->
+    <div class="hero-card">
+        <div class="nfc-tag">
+            <div class="nfc-dot"></div>
+            <span class="ar-text">IDRIS TRAVEL</span>
+            <span class="en-text">IDRIS TRAVEL</span>
+        </div>
+        <div class="avatar-wrap">
+            
+
+<div class="avatar">
+    <img src="profile.jpg" alt="Profile" id="profileImage">
+</div>
+
+
+            <div class="avatar-badge"></div>
+        </div>
+        <div class="profile-name ar-text">عزت سامي </div>
+        <div class="profile-name en-text">Ezzat Samy</div>
+        <div class="profile-role-badge">
+            <i class="fas fa-briefcase"></i>
+            <span class="ar-text">مدير الحسابات والمبيعات</span>
+            <span class="en-text">Accounts & Sales Manager</span>
+        </div>
+        <div class="profile-company">
+            <i class="fas fa-building"></i>
+            <span class="ar-text">سفريات إدريس كويت</span>
+            <span class="en-text">Idris Travel KW.</span>
+        </div>
+
+        <div class="quick-stats">
+            <div class="qs-item"><span class="qs-num" data-target="15">0</span><div class="qs-label ar-text">سنة</div><div class="qs-label en-text">Yrs</div></div>
+            <div class="qs-item"><span class="qs-num" data-target="500" data-suffix="+">0</span><div class="qs-label ar-text">عميل</div><div class="qs-label en-text">Clients</div></div>
+            <div class="qs-item"><span class="qs-num" data-target="30" data-suffix="+">0</span><div class="qs-label ar-text">وجهة</div><div class="qs-label en-text">Dest.</div></div>
+        </div>
+
+        <div class="cta-row">
+            <button class="btn-cta gold" onclick="saveVCard()">
+                <i class="fas fa-address-card"></i>
+                <span class="ar-text">حفظ البطاقة</span>
+                <span class="en-text">Save Contact</span>
+            </button>
+           
+            
+            <a href="https://wa.me/qr/6BKKUJAIPVAPE1" target="_blank" class="btn-cta wa">
+                <img src="whatsapp.png" class="wa-logo">
+
+                <span class="ar-text">واتساب</span>
+                <span class="en-text">WhatsApp</span>
+            </a>
+            <a href="tel:+96599174079" class="btn-cta outline">
+                <i class="fas fa-phone"></i>
+                <span class="ar-text">اتصال</span>
+                <span class="en-text">Call</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="info-card">
+        <div class="card-title"><i class="fas fa-bolt"></i><span class="ar-text">إجراءات سريعة</span><span class="en-text">Quick Actions</span></div>
+        <div class="action-grid">
+            <a href="tel:+96599174079" class="action-item"><div class="ai-icon"><i class="fas fa-phone"></i></div><span class="ar-text">اتصال</span><span class="en-text">Call</span></a>
+            <a href="https://wa.me/qr/6BKKUJAIPVAPE1" target="_blank" class="action-item">
+
+    <div class="ai-icon whatsapp-icon">
+        <img src="whatsapp.png" class="action-wa-logo"></div><span class="ar-text">واتساب</span><span class="en-text">WhatsApp</span></a>
+            <a href="mailto:idristrading@gmail.com" class="action-item"><div class="ai-icon"><i class="fas fa-envelope"></i></div><span class="ar-text">بريد</span><span class="en-text">Email</span></a>
+            <button class="action-item" onclick="saveVCard()"><div class="ai-icon"><i class="fas fa-user-plus"></i></div><span class="ar-text">حفظ</span><span class="en-text">Save</span></button>
+        </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="info-card">
+        <div class="card-title"><i class="fas fa-address-book"></i><span class="ar-text">بيانات التواصل</span><span class="en-text">Contact</span></div>
+        <div class="info-row">
+            <div class="info-icon"><i class="fas fa-phone"></i></div>
+            <div class="info-content"><div class="info-label ar-text">الهاتف</div><div class="info-label en-text">Phone</div><div class="info-value"><a href="tel:00965 99174079">0096599174079</a></div></div>
+            <button class="copy-btn" onclick="copy('0096599174079')"><i class="far fa-copy"></i></button>
+        </div>
+        <div class="info-row">
+    <div class="info-icon" style="background:rgba(37,211,102,0.15);border-color:rgba(37,211,102,0.25);color:#25D366;">
+        <img src="whatsapp.png" alt="WhatsApp">
+    </div>
+
+    <div class="info-content">
+        <div class="info-label">WhatsApp</div>
+
+        <div class="info-value">
+            <a href="https://wa.me/0096599174079" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;">
+
+                <span>0096599174079</span>
+
+            </a>
+        </div>
+    </div>
+
+    <button class="copy-btn" onclick="copy('+965 9917 4079')">
+        <i class="far fa-copy"></i>
+    </button>
+</div>
+        <div class="info-row">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="info-content"><div class="info-label ar-text">البريد</div><div class="info-label en-text">Email</div><div class="info-value"><a href="mailto:idristrading@gmail.com">idristrading@gmail.com</a></div></div>
+            <button class="copy-btn" onclick="copy('idristrading@gmail.com')"><i class="far fa-copy"></i></button>
+        </div>
+        <div class="info-row">
+            <div class="info-icon" style="background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.25);color:#ef4444;"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="info-content"><div class="info-label ar-text">العنوان</div><div class="info-label en-text">Address</div><div class="info-value ar-text"><a href="https://www.google.com/maps?q=29.3625927,47.9659331&z=17&hl=en" target="_blank">مكتب رقم ٣٥ بجوار بيت اولادنا.</a></div><div class="info-value en-text"><a href="https://www.google.com/maps?q=29.3625927,47.9659331&z=17&hl=en" target="_blank">Office 35 next to Bait Awladona</a></div></div>
+            <a href="https://www.google.com/maps?q=29.3625927,47.9659331&z=17&hl=en" target="_blank" class="copy-btn"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+    </div>
+
+    <!-- Specialties -->
+    <div class="info-card">
+        <div class="card-title"><i class="fas fa-star"></i><span class="ar-text">التخصصات</span><span class="en-text">Specialties</span></div>
+        <div class="spec-grid">
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-plane"></i></div><div class="spec-text ar-text">حجوزات الطيران</div><div class="spec-text en-text">Flight Booking</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-hotel"></i></div><div class="spec-text ar-text">الفنادق</div><div class="spec-text en-text">Hotels</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-passport"></i></div><div class="spec-text ar-text">التأشيرات</div><div class="spec-text en-text">Visas</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-kaaba"></i></div><div class="spec-text ar-text">العمرة والحج</div><div class="spec-text en-text">Umrah & Hajj</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-chart-line"></i></div><div class="spec-text ar-text">الحسابات</div><div class="spec-text en-text">Accounts</div></div>
+            <div class="spec-item"><div class="spec-icon"><i class="fas fa-handshake"></i></div><div class="spec-text ar-text">عروض الشركات</div><div class="spec-text en-text">Corporate</div></div>
+        </div>
+    </div>
+
+    <!-- Social -->
+    <div class="info-card">
+    <div class="card-title">
+        <i class="fas fa-share-alt"></i>
+        <span class="ar-text">تواصل اجتماعي</span>
+        <span class="en-text">Social</span>
+    </div>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/good_travel_offers/"
+           target="_blank"
+           class="soc-btn instagram-btn">
+
+            <i class="fab fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+
+    </div>
+</div>
+
+    <div class="footer-note">
+        <i class="fas fa-wifi"></i>
+        <span class="ar-text"> NFC © 2026</span>
+        <span class="en-text"> NFC © 2026</span>
+    </div>
+
+</div>
+
+<!-- FAB -->
+<div class="fab-group">
+    <a href="https://wa.me/qr/6BKKUJAIPVAPE1" target="_blank" class="fab fab-wa" data-tip="واتساب">
+        <img src="whatsapp.png" class="fab-wa-logo"></a>
+    <a href="tel:+965 9917 4079" class="fab fab-call" data-tip="اتصال"><i class="fas fa-phone"></i></a>
+    <button class="fab fab-save" data-tip="حفظ" onclick="saveVCard()"><i class="fas fa-user-plus"></i></button>
+</div>
+
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
+
+<script>
+/* Loading */
+window.addEventListener('load', () => setTimeout(() => document.getElementById('loading').classList.add('hide'), 1800));
+
+/* Theme */
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    const icon = document.getElementById('themeIcon');
+    icon.className = document.body.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+}
+(function(){ const t = localStorage.getItem('theme'); if(t === 'light') { document.body.classList.add('light-mode'); document.getElementById('themeIcon').className = 'fas fa-sun'; } })();
+
+/* Language */
+function setLang(l) {
+    document.body.className = 'lang-' + l;
+    document.getElementById('btnAr').classList.toggle('active', l === 'ar');
+    document.getElementById('btnEn').classList.toggle('active', l === 'en');
+    localStorage.setItem('lang', l);
+    showT(l === 'ar' ? '🇪🇬 عربي' : '🌍 English');
+}
+
+/* Copy */
+function copy(t) {
+    navigator.clipboard.writeText(t).then(() => showT('✓ تم النسخ'));
+}
+
+/* Toast */
+function showT(msg) {
+    const el = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+/* VCard */
+function saveVCard() {
+    const v = `BEGIN:VCARD\nVERSION:3.0\nFN:محمد إدريس\nN:إدريس;محمد;;;\nTITLE:مدير الحسابات والمبيعات\nORG:سفريات إدريس\nTEL;TYPE=CELL:+201234567890\nEMAIL:mohamed@idristravel.com\nURL:https://idristravel.com\nEND:VCARD`;
+    const b = new Blob([v], {type:'text/vcard'}); const u = URL.createObjectURL(b);
+    const a = document.createElement('a'); a.href = u; a.download = 'Mohamed_Idris.vcf'; a.click();
+    URL.revokeObjectURL(u); showT('✓ تم الحفظ');
+}
+
+/* Scroll Top */
+window.addEventListener('scroll', () => {
+    document.getElementById('toTop').classList.toggle('show', window.scrollY > 300);
+});
+
+/* Counters */
+(function(){ document.querySelectorAll('[data-target]').forEach(el => {
+    const t = +el.getAttribute('data-target'), s = el.getAttribute('data-suffix')||'', d=1200;
+    let c=0, iv=setInterval(()=>{ c+=t/(d/16); if(c>=t){c=t;clearInterval(iv)} el.textContent=Math.floor(c)+s },16);
+})})();
+</script>
+
+</body>
+</html>
